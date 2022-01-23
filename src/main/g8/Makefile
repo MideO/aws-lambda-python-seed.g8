@@ -58,8 +58,8 @@ set-up:
 auto-format: set-up
 	@echo " "
 	@echo "Formatting python code"
-	\$(PYTHON) black presigned_urls ./tests
-	\$(PYTHON) flake8 presigned_urls tests
+	\$(PYTHON) black handler.py
+	\$(PYTHON) flake8 handler.py tests
 
 security-checks:
 	\$(PYTHON) safety check
