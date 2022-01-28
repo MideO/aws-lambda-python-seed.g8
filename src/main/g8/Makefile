@@ -103,7 +103,7 @@ bundle:
 	@echo "bundling artefact"
 	@mkdir -p \$(TARGET_DIR)
 	@mkdir -p \$(ARTIFACT_DIR)
-	@printf \$(LATEST_TAG) > $(ARTIFACT_DIR)/latest.version
+	@printf \$(LATEST_TAG) > \$(ARTIFACT_DIR)/latest.version
 	@cp -r handler.py \$(TARGET_DIR)
 	@cp -r logging.conf \$(TARGET_DIR)
 	@cd \$(TARGET_DIR) && zip -q -r ../\$(ARTIFACT_DIR)/\$(CURRENT_ARTIFACT_VERSION) .
