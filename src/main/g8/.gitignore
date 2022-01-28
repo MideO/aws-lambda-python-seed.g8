@@ -1,0 +1,15 @@
+target
+artifacts
+.history
+/lib
+/.idea
+/*.iml
+/*.ipr
+/.idea_modules
+*.iws
+*.pyc
+__pycache__
+.vscode
+.idea
+.coverage
+.pytest_cache
