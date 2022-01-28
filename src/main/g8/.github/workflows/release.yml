@@ -1,0 +1,57 @@
+name: release
+on:
+  push:
+    tags:
+      - '*'
+  pull_request:
+jobs:
+  build_release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+      - name: install requirements
+        run: mkdir target && pip install -r requirements.txt -t target
+      - name: package
+        run: make bundle LATEST_TAG=\${{ github.ref_name }}
+      - name: list artifacts
+        run: ls -al artifacts
+      - name: release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: $name$-\${{ github.ref_name }}
+          tag_name: \${{ github.ref }}
+        env:
+          GITHUB_TOKEN: \${{ github.token }}
+      - name: upload artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: \${{ github.token }}
+        with:
+          upload_url: \${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/$name$-\${{ github.ref_name }}.zip
+          asset_name: $name$-\${{ github.ref_name }}.zip
+          asset_content_type: application/gzip
+      - name: upload artifact digest
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: \${{ github.token }}
+        with:
+          upload_url: \${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/$name$-\${{ github.ref_name }}.zip.base64sha256
+          asset_name: $name$-\${{ github.ref_name }}.zip.base64sha256
+          asset_content_type: application/gzip
+      - name: upload artifact version text file
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: \${{ github.token }}
+        with:
+          upload_url: \${{ steps.create_release.outputs.upload_url }}
+          asset_path: artifacts/latest.version
+          asset_name: latest.version
+          asset_content_type: application/text

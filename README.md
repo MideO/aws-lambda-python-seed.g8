@@ -1,6 +1,12 @@
-## aws-lambda-python-seed.g8 [WIP]
+## aws-lambda-python-seed.g8 
 
-This is a [Giter8][g8] template for python aws lambdas. 
+This is a [Giter8][g8] template for python aws lambdas.
+
+Whats include
+* Hello World Python Lambda
+* Hello World Test (PyTest) 
+* Github Workflow to generate deployable lambda 
+* Custom make tasks for testing packaging, releasing and deployment 
 
 ```
 sbt new mideo/aws-lambda-python-seed.g8
